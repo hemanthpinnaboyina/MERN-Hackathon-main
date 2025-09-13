@@ -1,13 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { restaurants } from "./data";   // make sure data.js exports `restaurants`
+import { restaurants } from "./data"; // ✅ make sure data.js exports restaurants
 import { useCart } from "../context/CartContext";
- // ✅ use the cart context
 
 export default function RestaurantDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { addToCart } = useCart(); // ✅ hook from context
+  const { addToCart } = useCart();
 
   const restaurant = restaurants.find((r) => r.id === parseInt(id));
   const [activeTab, setActiveTab] = useState("overview");
@@ -34,6 +33,9 @@ export default function RestaurantDetail() {
           <span className="text-yellow-500 text-lg">⭐</span>
           <span className="ml-1 text-gray-700">{restaurant.rating}</span>
         </div>
+        <p className="text-gray-600 mt-2">
+          📍 <span className="font-medium">{restaurant.location}</span>
+        </p>
       </div>
 
       {/* Tabs */}
@@ -55,11 +57,17 @@ export default function RestaurantDetail() {
 
       {/* Tab Content */}
       <div className="mt-6">
-        {/* Overview */}
+        {/* Overview with More Info & Timings */}
         {activeTab === "overview" && (
-          <p className="text-gray-700">
-            Welcome to {restaurant.name}! We serve {restaurant.description}.
-          </p>
+          <div className="space-y-6">
+            <p className="text-gray-700">{restaurant.moreInfo}</p>
+
+            {/* Timings */}
+            <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+              <h2 className="text-xl font-semibold mb-3">Timings</h2>
+              <p className="text-gray-700">{restaurant.timings}</p>
+            </div>
+          </div>
         )}
 
         {/* Menu */}
@@ -106,8 +114,8 @@ export default function RestaurantDetail() {
                   <button
                     className="mt-2 px-3 py-1 bg-orange-600 text-white rounded-lg hover:bg-orange-700 hover:cursor-pointer"
                     onClick={() => {
-                      addToCart(item); // ✅ add to cart
-                      navigate("/cart"); // ✅ go to cart page
+                      addToCart(item);
+                      navigate("/cart");
                     }}
                   >
                     Add to Bag
