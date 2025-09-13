@@ -6,6 +6,7 @@ import { useContext } from "react";
 import Cart from "./components/user/Cart";
 import Order from "./components/user/Order";
 import PlaceOrder from "./components/PlaceOrder";
+import Favourites from "./components/user/Favourites";
 
 
 
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Order />} />
         <Route path="/placeorder" element={<PlaceOrder />} />
+        <Route path="/favourites" element={<Favourites />} />
       </Routes>
     </Router>
   )
