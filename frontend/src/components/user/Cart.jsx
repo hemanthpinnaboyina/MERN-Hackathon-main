@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5"; // ✅ back arrow icon
 
 export default function Cart() {
-  const { cart, removeFromCart, getTotal } = useCart();
+  const { cart, removeFromCart, getTotal, updateQuantity } = useCart();
   const navigate = useNavigate();
 
   if (cart.length === 0) {
@@ -48,6 +48,22 @@ export default function Cart() {
               <div>
                 <p className="font-semibold">{item.name}</p>
                 <p className="text-gray-600">{item.price}</p>
+                {/* Quantity controls */}
+                <div className="flex items-center mt-2">
+                  <button
+                    className="px-2 py-1 bg-gray-200 rounded-l hover:bg-gray-300 hover:cursor-pointer"
+                    onClick={() => updateQuantity(index, Math.max((item.quantity || 1) - 1, 1))}
+                  >
+                    −
+                  </button>
+                  <span className="px-3 py-1 border-t border-b">{item.quantity || 1}</span>
+                  <button
+                    className="px-2 py-1 bg-gray-200 rounded-r hover:bg-gray-300 hover:cursor-pointer"
+                    onClick={() => updateQuantity(index, (item.quantity || 1) + 1)}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
             <button
@@ -63,7 +79,10 @@ export default function Cart() {
       {/* Total and Order button */}
       <div className="mt-6 p-4 bg-gray-100 rounded-lg flex justify-between items-center">
         <h2 className="text-xl font-semibold">Total: ₹{getTotal()}</h2>
-        <button className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 hover:cursor-pointer">
+        <button
+          className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 hover:cursor-pointer"
+          onClick={()=>navigate('/placeorder')}
+        >
           Place Order
         </button>
       </div>

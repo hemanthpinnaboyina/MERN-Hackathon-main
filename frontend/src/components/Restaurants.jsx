@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { restaurants } from "./data";
 
 export default function Restaurants() {
+    const navigate=useNavigate()
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Nearby Restaurants</h2>
